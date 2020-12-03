@@ -8,7 +8,7 @@ def encountered_trees(map_, dx, dy):
     x, y = 0, 0
     trees = 0
     while y < len(map_):
-        if map_[y][x] == '#':
+        if map_[y][x % len(map_[0])] == '#':
             trees += 1
         x += dx
         y += dy
@@ -17,7 +17,7 @@ def encountered_trees(map_, dx, dy):
 
 def run():
     with open('input.txt', encoding='utf-8') as fh:
-        map_ = [line.rstrip() * 100 for line in fh.readlines()]
+        map_ = [line.rstrip() for line in fh.readlines()]
 
     print(encountered_trees(map_, 3, 1))  # first answer
     print(
