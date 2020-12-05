@@ -2,14 +2,12 @@
 
 
 def calc_pos(code, max_):
-    min_ = 0
+    pos = 0
     for c in code:
-        if c in ('F', 'L'):
-            max_ = max_ - (max_ - min_) // 2 - 1
-        else:
-            min_ = min_ + (max_ - min_) // 2 + 1
-    assert min_ == max_
-    return min_
+        max_ //= 2
+        if c in ('B', 'R'):
+            pos += max_
+    return pos
 
 def run():
     with open('input.txt', encoding='utf-8') as fh:
@@ -18,8 +16,8 @@ def run():
     max_id = -1
     ids = []
     for line in data:
-        row = calc_pos(line[:7], 127)
-        col = calc_pos(line[7:], 7)
+        row = calc_pos(line[:7], 128)
+        col = calc_pos(line[7:], 8)
         id_ = row * 8 + col
         if id_ > max_id:
             max_id = id_
