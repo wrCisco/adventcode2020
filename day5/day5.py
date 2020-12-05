@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 
 
+def calc_pos(code, max_):
+    min_ = 0
+    for c in code:
+        if c in ('F', 'L'):
+            max_ = max_ - (max_ - min_) // 2 - 1
+        else:
+            min_ = min_ + (max_ - min_) // 2 + 1
+    assert min_ == max_
+    return min_
+
 def run():
     with open('input.txt', encoding='utf-8') as fh:
         data = [line.strip() for line in fh]
@@ -8,21 +18,9 @@ def run():
     max_id = -1
     ids = []
     for line in data:
-        row = [0, 127]
-        for char in line[:7]:
-            if char == 'F':
-                row[1] = row[1] - (row[1] - row[0]) // 2 - 1
-            elif char == 'B':
-                row[0] = row[0] + (row[1] - row[0]) // 2 + 1
-        assert row[0] == row[1]
-        col = [0, 7]
-        for char in line[7:]:
-            if char == 'L':
-                col[1] = col[1] - (col[1] - col[0]) // 2 - 1
-            elif char == 'R':
-                col[0] = col[0] + (col[1] - col[0]) // 2 + 1
-        assert col[0] == col[1]
-        id_ = row[0] * 8 + col[0]
+        row = calc_pos(line[:7], 127)
+        col = calc_pos(line[7:], 7)
+        id_ = row * 8 + col
         if id_ > max_id:
             max_id = id_
         ids.append(id_)
