@@ -31,9 +31,13 @@ def run():
         elif tot > target:
             tot -= contiguous.popleft()
         else:
-            print(min(contiguous) + max(contiguous))  # second answer
             break
-
+    else:
+        while len(contiguous):
+            tot -= contiguous.popleft()
+            if tot == target:
+                break
+    print(min(contiguous) + max(contiguous))  # second answer
 
 if __name__ == '__main__':
     run()
