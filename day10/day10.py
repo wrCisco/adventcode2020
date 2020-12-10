@@ -33,7 +33,10 @@ def run():
         diff = abs(s[not_expendables[i]] - s[not_expendables[i-1]])
         distance = not_expendables[i] - not_expendables[i-1]
         tot *= sum(len(list(itertools.combinations(s[not_expendables[i-1]+1:not_expendables[i]], n))) for n in range(max(0, diff - 3), distance))
-    # not really a universal solution, but if differences between consecutive values in original sequence are all 1 and 3, it should hold
+    # this solution is valid since in the original (well, sorted) sequence
+    # the difference between consecutive values is always 1 or 3, and
+    # all sequences of elements with a difference of 1 from both
+    # successor and predecessor are at most of length 4.
     print(tot)  # second answer method 1
 
     # this is something I'd like to have thought of by myself...
