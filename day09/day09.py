@@ -34,9 +34,9 @@ def run():
             break
     else:
         while len(contiguous):
-            tot -= contiguous.popleft()
             if tot == target:
                 break
+            tot -= contiguous.popleft()
     print(min(contiguous) + max(contiguous))  # second answer
 
 if __name__ == '__main__':
