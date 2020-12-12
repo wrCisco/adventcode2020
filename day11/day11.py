@@ -34,15 +34,11 @@ def seen_vals(map_, x, y):
 
 def is_to_update(map_, seats, x, y):
     vals = nbrs_vals(map_, seats, x, y)
-    if (map_[y][x] == 'L' and vals == 0) or (map_[y][x] == '#' and vals >= 4):
-        return True
-    return False
+    return (map_[y][x] == 'L' and vals == 0) or (map_[y][x] == '#' and vals >= 4)
 
 def is_to_update2(map_, seats, x, y):
     vals = seen_vals(map_, x, y)
-    if (map_[y][x] == 'L' and vals == 0) or (map_[y][x] == '#' and vals >= 5):
-        return True
-    return False
+    return (map_[y][x] == 'L' and vals == 0) or (map_[y][x] == '#' and vals >= 5)
 
 def update(map_, seats, x, y):
     map_[y][x] = '#' if map_[y][x] == 'L' else 'L'
