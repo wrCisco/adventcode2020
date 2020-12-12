@@ -29,25 +29,25 @@ def run():
     pos = [0, 0]  # H, V
     facing = 'E'
     for line in lines:
-        d = line[0]
+        d, n = line[0], int(line[1:])
         if d in dirs:
-            pos = instr[d](pos, int(line[1:]))
+            pos = instr[d](pos, n)
         elif d == 'F':
-            pos = instr[facing](pos, int(line[1:]))
+            pos = instr[facing](pos, n)
         else:
-            facing = instr[d](facing, int(line[1:]))
+            facing = instr[d](facing, n)
     print(sum(map(abs, pos)))  # first answer
 
     pos = [0, 0]
     waypoint = [10, 1]
     for line in lines:
-        d = line[0]
+        d, n = line[0], int(line[1:])
         if d in dirs:
-            waypoint = instr2[d](waypoint, int(line[1:]))
+            waypoint = instr2[d](waypoint, n)
         elif d == 'F':
-            pos = instr2[d](pos, waypoint, int(line[1:]))
+            pos = instr2[d](pos, waypoint, n)
         else:
-            waypoint = instr2[d](waypoint, radians(int(line[1:])))
+            waypoint = instr2[d](waypoint, radians(n))
     print(sum(map(abs, pos)))  # second answer
 
 
