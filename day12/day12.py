@@ -26,29 +26,23 @@ def run():
     with open('input.txt') as fh:
         lines = [line.strip() for line in fh]
 
-    pos = [0, 0]  # H, V
+    pos1 = [0, 0]  # H, V
+    pos2 = [0, 0]
     facing = 'E'
-    for line in lines:
-        d, n = line[0], int(line[1:])
-        if d in dirs:
-            pos = instr[d](pos, n)
-        elif d == 'F':
-            pos = instr[facing](pos, n)
-        else:
-            facing = instr[d](facing, n)
-    print(sum(map(abs, pos)))  # first answer
-
-    pos = [0, 0]
     waypoint = [10, 1]
     for line in lines:
         d, n = line[0], int(line[1:])
         if d in dirs:
+            pos1 = instr[d](pos1, n)
             waypoint = instr2[d](waypoint, n)
         elif d == 'F':
-            pos = instr2[d](pos, waypoint, n)
+            pos1 = instr[facing](pos1, n)
+            pos2 = instr2[d](pos2, waypoint, n)
         else:
+            facing = instr[d](facing, n)
             waypoint = instr2[d](waypoint, radians(n))
-    print(sum(map(abs, pos)))  # second answer
+    print(sum(map(abs, pos1)))  # first answer
+    print(sum(map(abs, pos2)))  # second answer
 
 
 if __name__ == '__main__':
