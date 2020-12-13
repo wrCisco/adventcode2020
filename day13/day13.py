@@ -44,7 +44,7 @@ def run():
         bus, delta = buses.pop(0)
         while (t + delta) % bus:
             t += step
-        step = lcm(step, start * bus)
+        step = lcm(step, bus)
     print(t)  # second answer
 
 
