@@ -23,22 +23,15 @@ def run():
     with open('input.txt') as fh:
         lines = [line.strip() for line in fh]
 
-    lowest = int(lines[0])
-    buses = [int(n) for n in lines[1].split(',') if n != 'x']
-    mintime = 9999999999999999999999999
-    chosen = 0
-    for bus in buses:
-        mins = 0
-        while mins < lowest:
-            mins += bus
-        if mins < mintime:
-            mintime = mins
-            chosen = bus
-    print((mintime - lowest) * chosen)  # first answer
-
+    earliest = int(lines[0])
     buses = [(int(n), i) for i, n in enumerate(lines[1].split(',')) if n.isdigit()]
+    waiting, bus = min(
+        ((-(earliest % bus) + bus, bus) for bus, _ in buses),
+        key=lambda x: x[0]
+    )
+    print(waiting * bus)  # first answer
+
     t = buses.pop(0)[0]
-    buses.sort(reverse=True)
     start, step = t, t
     while buses:
         bus, delta = buses.pop(0)
