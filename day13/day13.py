@@ -1,24 +1,5 @@
 #!/usr/bin/env python3
 
-
-def gcd(first: int, second: int) -> int:
-    """
-    Greatest common divisor.
-    """
-    while second != 0:
-        first, second = second, first % second
-    return abs(first)
-
-
-def lcm(first: int, second: int) -> int:
-    """
-    Least common multiple.
-    """
-    if first == 0 or second == 0:
-        return 0
-    return abs(first * second) // gcd(first, second)
-
-
 def run():
     with open('input.txt') as fh:
         lines = [line.strip() for line in fh]
@@ -37,9 +18,8 @@ def run():
         bus, delta = buses.pop(0)
         while (t + delta) % bus:
             t += step
-        step = lcm(step, bus)
+        step *= bus
     print(t)  # second answer
-
 
 if __name__ == '__main__':
     run()
