@@ -12,10 +12,9 @@ def run():
     )
     print(waiting * bus)  # first answer
 
-    t = buses.pop(0)[0]
-    start, step = t, t
+    t = step = buses.pop(0)[0]
     while buses:
-        bus, delta = buses.pop(0)
+        bus, delta = buses.pop()
         while (t + delta) % bus:
             t += step
         step *= bus
