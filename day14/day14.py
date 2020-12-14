@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 
-from collections import defaultdict
 import itertools
 import re
 
@@ -9,7 +8,7 @@ def run():
     with open('input.txt') as fh:
         lines = [line.strip() for line in fh]
 
-    mem = defaultdict(int)
+    mem = {}
     for line in lines:
         if line[:7] == 'mask = ':
             mask = line[7:]
@@ -21,7 +20,7 @@ def run():
             mem[address] = int(''.join(masked_val), 2)
     print(sum(mem.values()))  # first answer
 
-    mem = defaultdict(int)
+    mem = {}
     for line in lines:
         if line[:7] == 'mask = ':
             mask = line[7:]
