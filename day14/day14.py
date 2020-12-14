@@ -8,24 +8,20 @@ def run():
     with open('input.txt') as fh:
         lines = [line.strip() for line in fh]
 
-    mem = {}
+    mem1, mem2 = {}, {}
     for line in lines:
         if line[:7] == 'mask = ':
             mask = line[7:]
         else:
             address, val = re.search(r'\[(\d+)\] = (\d+)', line).groups()
+            
+            # part one
             masked_val = [
                 bit if mask[i] == 'X' else mask[i] for i, bit in enumerate(f'{int(val):0>36b}')
             ]
-            mem[address] = int(''.join(masked_val), 2)
-    print(sum(mem.values()))  # first answer
+            mem1[address] = int(''.join(masked_val), 2)
 
-    mem = {}
-    for line in lines:
-        if line[:7] == 'mask = ':
-            mask = line[7:]
-        else:
-            address, val = re.search(r'\[(\d+)\] = (\d+)', line).groups()
+            # part two
             masked_addr = [
                 bit if mask[i] == '0' else mask[i] for i, bit in enumerate(f'{int(address):0>36b}')
             ]
@@ -37,8 +33,9 @@ def run():
                     addr[addr.index('X')] = bit
                 addresses.append(''.join(addr))
             for addr in addresses:
-                mem[addr] = int(val)
-    print(sum(mem.values()))  # second answer
+                mem2[addr] = int(val)
+    print(sum(mem1.values()))  # first answer
+    print(sum(mem2.values()))  # second answer
 
 if __name__ == '__main__':
     run()
