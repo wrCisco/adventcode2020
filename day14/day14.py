@@ -26,14 +26,11 @@ def run():
                 bit if mask[i] == '0' else mask[i] for i, bit in enumerate(f'{int(address):0>36b}')
             ]
             floatings = itertools.product('01', repeat=masked_addr.count('X'))
-            addresses = []
             for comb in floatings:
                 addr = masked_addr.copy()
                 for bit in comb:
                     addr[addr.index('X')] = bit
-                addresses.append(''.join(addr))
-            for addr in addresses:
-                mem2[addr] = int(val)
+                mem2[''.join(addr)] = int(val)
     print(sum(mem1.values()))  # first answer
     print(sum(mem2.values()))  # second answer
 
