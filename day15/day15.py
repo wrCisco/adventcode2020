@@ -9,10 +9,10 @@ def run():
     spoken = {num: deque([n], 2) for n, num in enumerate(nums, 1)}
     last = nums[-1]
     for turn in range(len(spoken) + 1, 30000001):
-        if len(spoken[last]) == 1:
-            n = 0
-        else:
+        try:
             n = spoken[last][1] - spoken[last][0]
+        except IndexError:
+            n = 0
         try:
             spoken[n].append(turn)
         except KeyError:
