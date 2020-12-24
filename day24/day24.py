@@ -2,7 +2,7 @@
 
 
 import re
-from collections import defaultdict
+from functools import reduce
 
 
 dirs = {
@@ -16,22 +16,20 @@ dirs = {
 
 
 def floor_size(tiles):
-    return int(max((max(abs(v.real), abs(v.imag)) for v in tiles.keys())))
+    return int(max((max(abs(v.real), abs(v.imag)) for v in tiles)))
 
 
 def run():
     with open('input.txt') as fh:
         instr = [re.findall(r'(se|sw|nw|ne|w|e)', line.strip()) for line in fh]
 
-    tiles = defaultdict(bool)
+    tiles = reduce(
+        lambda x, y: x ^ {y},
+        (sum(dirs[step] for step in i) for i in instr),
+        set()
+    )
 
-    for i in instr:
-        pos = 0
-        for step in i:
-            pos += dirs[step]
-        tiles[pos] = not tiles[pos]
-
-    print(sum(tiles.values()))  # first answer
+    print(len(tiles))  # first answer
 
     fsize = floor_size(tiles)
     limits = [-fsize-1, fsize+2]
@@ -40,14 +38,14 @@ def run():
         for r in range(limits[0], limits[1]):
             for i in range(limits[0], limits[1]):
                 pos = complex(r, i)
-                color = ts.get(pos, False)
-                nbrs = sum(ts.get(pos+nbr, False) for nbr in dirs.values())
+                color = pos in ts
+                nbrs = sum(pos+nbr in ts for nbr in dirs.values())
                 if (color and (nbrs == 0 or nbrs > 2)) or (not color and nbrs == 2):
-                    tiles[pos] = not color
+                    tiles.remove(pos) if pos in tiles else tiles.add(pos)
         fsize = floor_size(tiles)
-        limits = [-fsize-1, fsize+2] 
+        limits = [-fsize-1, fsize+2]
 
-    print(sum(tiles.values()))  # second answer
+    print(len(tiles))  # second answer
 
 
 if __name__ == '__main__':
