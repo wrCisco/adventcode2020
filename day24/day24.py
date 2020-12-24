@@ -34,12 +34,12 @@ def run():
     print(sum(tiles.values()))  # first answer
 
     fsize = floor_size(tiles)
-    limits = [-fsize-1, fsize+2] 
+    limits = [-fsize-1, fsize+2]
     for _ in range(100):
         ts = tiles.copy()
         for r in range(limits[0], limits[1]):
             for i in range(limits[0], limits[1]):
-                pos = r+complex(0, i)
+                pos = complex(r, i)
                 color = ts.get(pos, False)
                 nbrs = sum(ts.get(pos+nbr, False) for nbr in dirs.values())
                 if (color and (nbrs == 0 or nbrs > 2)) or (not color and nbrs == 2):
